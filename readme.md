@@ -5,5 +5,5 @@ This repo contains sample code demonstrating the use of the various sharedo APIs
 ## Sample index by topic
 
 ### Time capture API
-- [Providing a time capture UI](/time/entry/readme.md)
+- [Providing a time capture UI](/time/entry)
 
