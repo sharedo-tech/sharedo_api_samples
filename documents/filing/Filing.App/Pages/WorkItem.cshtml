@@ -1,0 +1,48 @@
+﻿@page
+@model Filing.App.Pages.WorkItemModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <h2>@Model.WorkItem?.Title</h2>
+        <p>@Model.WorkItem?.Reference</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 rounded bg-dark p-4 mb-4 pb-4">
+        <div class="d-flex flex-row-reverse">
+            <h4 class="right">Document Expectations</h4>
+        </div>
+
+        @if (Model.PendingExpectations.Count > 0)
+        {
+            <div class="mt-4">
+                <ul class="list-group">
+                    @foreach (var documentExpectation in Model.PendingExpectations)
+                    {
+                        <li class="list-group-item">
+                            <a asp-page="/UploadDocument" asp-route-id="@documentExpectation.Id" asp-route-workitemid="@Model.WorkItem?.Id"
+                               class="w-100 h-100 d-inline-block text-decoration-none">
+                                <div class="d-flex">
+                                    <h4 class="text-primary flex-grow-1">@documentExpectation.Title</h4>
+                                    <span class="text-secondary">@documentExpectation.PhaseName</span>
+                                </div>
+
+                                <span class="text-dark">@documentExpectation.Reference</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="p-4 bg-light d-flex justify-content-center">
+                <h4 class="m-4 text-dark flex-shrink-1 text-center">There are no pending document expectations for this work item.</h4>
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,55 @@
+﻿@page
+@model Filing.App.Pages.SearchModel
+@{
+}
+
+<div class="row">
+    <div class="col-12">
+        <form method="post">
+            <div class="btn-group mb-3 w-100">
+                @foreach (var searchType in Model.SearchTypes)
+                {
+                    <input type="radio" class="btn-check" name="searchType" value="@searchType" id="@searchType.ToString()" asp-for="SearchType" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="@searchType.ToString()">@searchType.ToString()</label>
+                }
+            </div>
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="searchTerm" asp-for="SearchTerm" aria-label="Enter Search Value.." placeholder="Search Value..">
+                <button class="btn btn-primary" type="submit" id="search" disabled>Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row justify-content-md-center mb-4 pb-4">
+    <div class="col-12">
+        <ul class="list-group">
+            @foreach (var item in Model.WorkItems)
+            {
+                <li class="list-group-item">
+                    <a asp-page="/WorkItem" asp-route-id="@item.Id" class="w-100 h-100 d-inline-block  text-decoration-none">
+                        <div class="d-flex">
+                            <h4 class="text-primary flex-grow-1">@item.Title</h4>
+                            <span class="text-secondary">@item.TypeName</span>
+                        </div>
+
+                        <span class="text-dark">@item.Reference</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $("input[type=radio]").on('input', () => {
+            $("#searchTerm").val('');
+        });
+
+        $("#searchTerm").on('input', (evt) => {
+            $("#search").prop('disabled', !evt.target.value);
+        });
+    </script>
+}
