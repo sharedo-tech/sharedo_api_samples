@@ -40,11 +40,12 @@ namespace Filing.App.Sharedo
         Task<IList<WorkItem>> FindMattersByClientName(string clientName);
 
         /// <summary>
-        /// Find matters by a roles entity having a location with post code.
+        /// Find matters by a roles which have a postcode, for example role 'client' with postcode 'SE11AB'.
         /// </summary>
+        /// <param name="roles">The roles.</param>
         /// <param name="postCode">The post code.</param>
         /// <returns>Collection of the work items</returns>
-        Task<IList<WorkItem>> FindMattersByPostCode(string postCode);
+        Task<IList<WorkItem>> FindMattersByRolesWithPostCode(string[] roles, string postCode);
 
         /// <summary>
         /// Find matters by a roles entity having an email contact.

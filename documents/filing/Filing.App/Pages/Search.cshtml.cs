@@ -55,7 +55,9 @@ namespace Filing.App.Pages
                 case SearchType.ClientName:
                     return await _workItemSearches.FindMattersByClientName(searchTerm);
                 case SearchType.PostCode:
-                    return await _workItemSearches.FindMattersByPostCode(searchTerm);
+                    return await _workItemSearches.FindMattersByRolesWithPostCode(
+                        new string[] { "client" },
+                        searchTerm);
                 case SearchType.Email:
                     return await _workItemSearches.FindMattersByEmail(searchTerm);
                 case SearchType.Attribute:

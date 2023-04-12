@@ -23,6 +23,10 @@ namespace Filing.App.Sharedo
         /// <inheritdoc />
         public async Task<IList<WorkItem>> FindByIds(IList<Guid> workItemIds)
         {
+            if (!workItemIds.Any()) {
+                return new List<WorkItem>(0);
+            }
+
             var searchRequest = new
             {
                 Search = new
@@ -128,7 +132,7 @@ namespace Filing.App.Sharedo
         }
 
         /// <inheritdoc />
-        public async Task<IList<WorkItem>> FindMattersByPostCode(string postCode)
+        public async Task<IList<WorkItem>> FindMattersByRolesWithPostCode(string[] roles, string postCode)
         {
             var searchRequest = new
             {
@@ -138,6 +142,7 @@ namespace Filing.App.Sharedo
                     {
                         new
                         {
+                            Roles = roles,
                             PostCode = postCode,
                         },
                     },
@@ -266,7 +271,7 @@ namespace Filing.App.Sharedo
                 }
 
                 workItems.Add(new WorkItem(
-                    id, 
+                    id,
                     data["title"]?.ToString() ?? string.Empty,
                     data["reference"]?.ToString() ?? string.Empty,
                     data["phase.systemName"]?.ToString() ?? string.Empty,
