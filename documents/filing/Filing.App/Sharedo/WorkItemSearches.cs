@@ -128,7 +128,7 @@ namespace Filing.App.Sharedo
         }
 
         /// <inheritdoc />
-        public async Task<IList<WorkItem>> FindMattersByPostCode(string postCode)
+        public async Task<IList<WorkItem>> FindMattersByRolesWithPostCode(string[] roles, string postCode)
         {
             var searchRequest = new
             {
@@ -138,6 +138,7 @@ namespace Filing.App.Sharedo
                     {
                         new
                         {
+                            Roles = roles,
                             PostCode = postCode,
                         },
                     },
