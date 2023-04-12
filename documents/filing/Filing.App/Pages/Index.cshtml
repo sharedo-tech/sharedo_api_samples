@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Work Items";
+
+    string viewType = ViewData["ViewType"]?.ToString() ?? IndexModel.ViewMostRecent;
+}
+
+<div class="row justify-content-md-center mb-4 mt-4">
+    <div class="col-12">
+        <div class="btn-group w-100">
+            <a asp-page="/Index" asp-route-viewtype="most-recent" class="btn @(viewType != "most-recent" ? "btn-outline-primary" : "btn-primary")">Most Recent</a>
+            <a asp-page="/Index" asp-route-viewtype="most-viewed" class="btn @(viewType != "most-viewed" ? "btn-outline-primary" : "btn-primary")">Most Viewed</a>
+            <a asp-page="/Index" asp-route-viewtype="bookmarked" class="btn @(viewType != "bookmarked" ? "btn-outline-primary" : "btn-primary")">Bookmarked</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 d-flex flex-row-reverse">
+        <span>@(Model.Description)</span>
+    </div>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-12">
+        <ul class="list-group">
+            @foreach (var item in Model.WorkItems)
+            {
+                <li class="list-group-item">
+                    <a asp-page="/WorkItem" asp-route-id="@item.Id" class="w-100 h-100 d-inline-block  text-decoration-none">
+                        <div class="d-flex">
+                            <h4 class="text-primary flex-grow-1">@item.Title</h4>
+                            <span class="text-secondary">@item.TypeName</span>
+                        </div>
+
+                        <span class="text-dark">@item.Reference</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

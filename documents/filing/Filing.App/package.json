@@ -1,0 +1,8 @@
+{
+  "name": "filing.app",
+  "version": "0.0.0",
+  "scripts": {},
+  "devDependencies": {
+    "bootstrap": "^5.2.3"
+  }
+}

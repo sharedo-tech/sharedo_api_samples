@@ -1,0 +1,72 @@
+﻿@page
+@model Filing.App.Pages.UploadDocumentModel
+@{
+}
+
+<style type="text/css">
+    input::file-selector-button {
+        color: black;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <h4>Upload a document</h4>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <h2>@Model.WorkItem?.Title</h2>
+        <p>@Model.WorkItem?.Reference</p>
+    </div>
+</div>
+
+<div class="bg-light rounded p-4 text-dark mt-4 mb-4">
+    <form enctype="multipart/form-data" method="post" id="fileupload" asp-route-id="@(ViewData["id"])" asp-route-workitemid="@(ViewData["workItemId"])">
+
+        <div>
+            <label class="mb-1" asp-for="Folder">Select Folder</label>
+            <select class="form-select" aria-label="Select Folder.." asp-for="Folder">
+                @foreach (var folder in Model.Folders)
+                {
+                    <option value="@folder.Name">@folder.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Folder" class="text-danger"></span>
+        </div>
+        
+
+        <div class="input-group custom-file-button mt-4">
+            <label class="input-group-text text-dark" asp-for="FormFile">Browse for File..</label>
+            <input type="file" class="form-control" asp-for="FormFile">
+        </div>
+        <span asp-validation-for="FormFile"></span>
+
+        <div class="mt-4">
+            <input id="submit" class="btn btn-primary ps-4 pe-4" type="submit" value="Upload" disabled/>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        $('.field-validation-error').hide();
+
+        $('#fileupload').on('submit', () => {
+            $('#fileupload').validate();
+            $('.field-validation-error').show();
+        });
+
+        $('input').on('input', () => {
+            $('#fileupload').validate();
+
+            $("#submit").prop('disabled', !$('#fileupload').valid());
+        });
+    </script>
+}
